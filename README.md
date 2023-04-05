@@ -3,5 +3,5 @@ Open-source wordlist scraper.
 
 # Prereqs
 
-RUBY
+RUBY \n
 Gems: tty-prompt nokogiri open-uri
