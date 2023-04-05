@@ -50,7 +50,7 @@ def select_regex_pattern
   option = $prompt.select("Select a regex pattern:", options, cycle: true, per_page: options.size)
 
   if option == :custom
-    $pattern = $prompt.ask("Enter a custom regex pattern:") { |q| q.validate(/.+/) }
+    $pattern = Regexp.new($prompt.ask("Enter a custom regex pattern:") { |q| q.validate(/.+/) })
   else
     $pattern = option
   end
@@ -98,7 +98,7 @@ loop do
   $prompt.say("Current URL: \e[32m#{$url}\033[0m \n")
   $prompt.say("Current output file name: \e[32m#{$output_file}\033[0m \n")
 
-  choice = $prompt.select("Select an option:", %w(Select_regex_pattern Set_website_URL Set_output_file_name Start_scraping Quit))
+  choice = $prompt.select("\n Select an option:", %w(Select_regex_pattern Set_website_URL Set_output_file_name Start_scraping Quit))
   case choice
   when "Select_regex_pattern"
     select_regex_pattern
@@ -112,4 +112,3 @@ loop do
     break
   end
 end
-
