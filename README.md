@@ -1,4 +1,4 @@
-# fragmentum
+# Fragmentum
 Open-source wordlist scraper.
 
 # Prereqs
