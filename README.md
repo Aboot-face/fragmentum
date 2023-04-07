@@ -1,5 +1,5 @@
 # Fragmentum
-Open-source wordlist scraper.
+Open-source CTF Hub. Most useful for Password Cracking and ciphers.
 
 # Prereqs
 
