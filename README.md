@@ -3,7 +3,7 @@ Open-source wordlist scraper.
 
 # Prereqs
 
-Packages: RUBY | GCC | Make 
+Packages: RUBY | GCC | Make  
 Gems: tty-prompt | nokogiri | open-uri  
 
 # How to use
