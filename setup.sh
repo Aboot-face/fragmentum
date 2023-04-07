@@ -40,7 +40,7 @@ done
 echo -e "\n${GREEN}Package upgrade complete.${NC}"
 
 # List of required programs
-programs=(ruby)
+programs=(ruby john gcc make)
 
 # Check if each program is installed and install if necessary
 for program in "${programs[@]}"; do
@@ -74,3 +74,12 @@ for gem in "${gems[@]}"; do
     echo -e "${GREEN}$gem is already installed.${NC}"
   fi
 done
+
+# Download rockyou.txt into the password_lists directory
+echo -e "${CYAN}Downloading rockyou.txt...${NC}"
+wget -O password_lists/rockyou.txt https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+if [ $? -eq 0 ]; then
+  echo -e "${GREEN}rockyou.txt download complete.${NC}"
+else
+  echo -e "${RED}rockyou.txt download failed.${NC}"
+fi
