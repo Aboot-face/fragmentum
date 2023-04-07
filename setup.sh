@@ -77,7 +77,7 @@ done
 
 # Download rockyou.txt into the password_lists directory
 echo -e "${CYAN}Downloading rockyou.txt...${NC}"
-wget -O password_lists/rockyou.txt https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
+wget -O password_lists/rockyou.txt https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt &> /dev/null
 if [ $? -eq 0 ]; then
   echo -e "${GREEN}rockyou.txt download complete.${NC}"
 else
