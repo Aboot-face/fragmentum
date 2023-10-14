@@ -50,15 +50,24 @@ class WebScraper
   def select_regex_pattern
     options = PATTERNS.map { |key, value| { name: "#{key}: #{value[:description]}", value: value[:pattern] } }
     options << { name: "C: Custom regex pattern", value: :custom }
-
+  
     option = @prompt.select("Select a regex pattern:", options, cycle: true, per_page: options.size)
-
+  
     if option == :custom
-      @pattern = Regexp.new(@prompt.ask("Enter a custom regex pattern:") { |q| q.validate(/.+/) })
+      custom_pattern_str = @prompt.ask("Enter a custom regex pattern:") { |q| q.required(true) }
+      begin
+        @pattern = Regexp.new(custom_pattern_str)
+        puts "Created regex: #{@pattern.inspect}" # This line prints the regex
+      rescue RegexpError => e
+        @prompt.error("Invalid regex pattern: #{e.message}")
+        retry
+      end
     else
       @pattern = option
+      puts "Selected predefined regex: #{@pattern.inspect}" # This line prints the regex
     end
   end
+
 
   def set_website_url
     @url = @prompt.ask("Enter the website URL to scrape:")
@@ -76,7 +85,22 @@ class WebScraper
     else
       begin
         doc = Nokogiri::HTML(URI.open(@url))
-        matches = doc.text.scan(@pattern).uniq
+        text_content = []
+  
+        # Iterate over significant elements and capture their text
+        doc.traverse do |node|
+          if node.text? && node.content.strip.length > 0
+            # Add text content of the node to the array, along with newlines for separation
+            text_content << node.content.strip
+          end
+        end
+  
+        # Join the text content array into a single string, separated by newlines
+        formatted_text = text_content.join("\n")
+  
+        # Scan for matches
+        matches = formatted_text.scan(@pattern).uniq
+  
         if @output_file.empty?
           @prompt.ok("Scraping complete. Results:")
           puts matches.join("\n")
